@@ -10,7 +10,7 @@ public class CreatePersonSkillCommand
     public int SkillId { get; init; }
 }
 
-public class CreatePersonSkillCommandHandler : IRequestHandler<CreatePersonSkillCommand, int>
+public class CreatePersonSkillCommandHandler : IRequestHandler<CreatePersonSkillCommand>
 {
     private readonly IApplicationDbContext _dbContext;
 
@@ -19,7 +19,7 @@ public class CreatePersonSkillCommandHandler : IRequestHandler<CreatePersonSkill
         _dbContext = dbContext;
     }
 
-    public async Task<AppResponse<int>> Handle(
+    public async Task<AppResponse> Handle(
         CreatePersonSkillCommand command,
         CancellationToken cancellationToken)
     {
@@ -33,6 +33,6 @@ public class CreatePersonSkillCommandHandler : IRequestHandler<CreatePersonSkill
 
         await _dbContext.SaveChangesAsync(cancellationToken);
 
-        return new(201, entity.Id);
+        return new(201);
     }
 }

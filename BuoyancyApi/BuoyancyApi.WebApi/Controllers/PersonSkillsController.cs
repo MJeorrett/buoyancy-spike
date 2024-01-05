@@ -15,7 +15,7 @@ namespace BuoyancyApi.WebApi.Controllers;
 public class PersonSkillController : ControllerBase
 {
     [HttpPost("api/personskills")]
-    public async Task<ActionResult<AppResponse<int>>> CreatePersonSkill(
+    public async Task<ActionResult<AppResponse>> CreatePersonSkill(
         [FromBody] CreatePersonSkillCommand command,
         [FromServices] CreatePersonSkillCommandHandler handler,
         CancellationToken cancellationToken)

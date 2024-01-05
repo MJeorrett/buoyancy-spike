@@ -2,6 +2,9 @@
 
 public class PersonSkillEntity
 {
+    // This should have a composite PK but keeping simple as possible for spike.
+    public int Id { get; set; }
+
     public int PersonId { get; set; }
 
     public PersonEntity Person { get; set; } = null!;

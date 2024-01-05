@@ -11,6 +11,8 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<SkillEntity> Skills { get; init; } = null!;
     public DbSet<PersonSkillEntity> PersonSkills { get; init; } = null!;
     public DbSet<PersonEntity> Persons { get; init; } = null!;
+    public DbSet<NonProjectTimeTypeEntity> NonProjectTimeTypes { get; init; } = null!;
+    public DbSet<PlannedTimeEntity> PlannedTimes { get; init; } = null!;
     public DbSet<ProjectEntity> Projects { get; init; }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
