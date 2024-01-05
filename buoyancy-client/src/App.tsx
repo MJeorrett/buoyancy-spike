@@ -4,6 +4,10 @@ import PeopleList from "./People/List";
 import PersonShow from "./People/Show";
 import PersonEdit from "./People/Edit";
 import PersonCreate from "./People/Create";
+import ProjectsList from "./Projects/List";
+import ProjectShow from "./Projects/Show";
+import ProjectEdit from "./Projects/Edit";
+import ProjectCreate from "./Projects/Create";
 
 const App = () => {
   return (
@@ -14,6 +18,13 @@ const App = () => {
         show={PersonShow}
         edit={PersonEdit}
         create={PersonCreate}
+      />
+      <Resource
+        name="projects"
+        list={ProjectsList}
+        show={ProjectShow}
+        edit={ProjectEdit}
+        create={ProjectCreate}
       />
     </Admin>
   );
