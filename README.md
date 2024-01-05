@@ -33,14 +33,13 @@ Project {
     string Name
 }
 
-PersonType {
+Role {
     int Id
     string Name
 }
 
-PersonSkill {
+Skill {
     int Id
-    int PersonTypeId
     string Name
 }
 
@@ -56,7 +55,7 @@ ProjectRequiredTime {
 Person {
     int Id
     string Name
-    int PersonTypeId
+    int RoleId
 }
 
 PersonSkill {
@@ -79,9 +78,10 @@ PlannedTime {
 }
 
 Project ||--o{ ProjectRequiredTime : ""
-PersonType ||--o{ Person: ""
-PersonType ||--o{ ProjectRequiredTime: ""
-PersonSkill ||--o{ ProjectRequiredTime: ""
+Role ||--o{ Person: ""
+Role ||--o{ ProjectRequiredTime: ""
+Skill ||--o{ ProjectRequiredTime: ""
+Skill ||--o{ PersonSkill: ""
 Person ||--o{ PersonSkill: ""
 Person ||--o{ PlannedTime: ""
 NonProjectTimeType ||--o{ PlannedTime: ""

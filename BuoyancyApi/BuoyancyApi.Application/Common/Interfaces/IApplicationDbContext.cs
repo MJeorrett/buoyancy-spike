@@ -7,6 +7,8 @@ public interface IApplicationDbContext
 {
     public DbSet<RoleEntity> Roles { get; }
     public DbSet<SkillEntity> Skills { get; }
+    public DbSet<PersonSkillEntity> PersonSkills { get; }
+    public DbSet<PersonEntity> Persons { get; }
     public DbSet<ProjectEntity> Projects { get; }
 
     public Task<int> SaveChangesAsync(CancellationToken cancellationToken);
