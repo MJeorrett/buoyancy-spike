@@ -7,6 +7,7 @@ namespace BuoyancyApi.Infrastructure.Persistence;
 
 public class ApplicationDbContext : DbContext, IApplicationDbContext
 {
+    public DbSet<RoleEntity> Roles { get; init; } = null!;
     public DbSet<ProjectEntity> Projects { get; init; }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
