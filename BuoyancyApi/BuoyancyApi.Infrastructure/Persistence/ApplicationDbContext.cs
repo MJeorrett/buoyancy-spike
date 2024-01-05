@@ -1,5 +1,6 @@
 using BuoyancyApi.Application.Common.Interfaces;
 using BuoyancyApi.Core.Entities;
+using BuoyancyApi.Infrastructure.Persistence.ValueConverters;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -13,6 +14,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<PersonEntity> Persons { get; init; } = null!;
     public DbSet<NonProjectTimeTypeEntity> NonProjectTimeTypes { get; init; } = null!;
     public DbSet<PlannedTimeEntity> PlannedTimes { get; init; } = null!;
+    public DbSet<RequiredTimeEntity> RequiredTimes { get; init; } = null!;
     public DbSet<ProjectEntity> Projects { get; init; }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -26,5 +28,18 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
         base.OnModelCreating(modelBuilder);
+    }
+
+    protected override void ConfigureConventions(ModelConfigurationBuilder builder)
+    {
+        base.ConfigureConventions(builder);
+
+        builder.Properties<DateOnly>()
+            .HaveConversion<DateOnlyConverter>()
+            .HaveColumnType("date");
+
+        builder.Properties<DateTime>()
+            .HaveConversion<DateTimeConverter>()
+            .HaveColumnType("datetime2");
     }
 }
