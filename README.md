@@ -98,11 +98,6 @@ Columns:
 
 Upsert people and projects.
 
-### Assign users skills and types
-- View existing people (upserted via bulk float upload).
-- Set type against an existing person.
-- Add 1 or more skills to an existing person.
-
 ### View projects and required time
 - View existing projects (upserted via bulk float upload).
 - View existing required time for projects (chip per resource type in table view).
@@ -115,8 +110,15 @@ Upsert people and projects.
 ### Basic report of total required time vs planned time
 Show total planned vs required time per week. Highlight over and under resourced project weeks. Chip for each type of person. Red text if over / under resourced.
 
+### Assign users skills and types
+- View existing people (upserted via bulk float upload).
+- Set type against an existing person.
+- Add 1 or more skills to an existing person.
+
 ### Report skill warnings
 Show where planned person does not have required skill.
+
+### Ability to bulk load time off from float
 
 ### Add project onboarding time
 Add project onboarding time (modeled as non-project time).

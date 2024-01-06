@@ -8,6 +8,7 @@ using BuoyancyApi.Application.Common.AppRequests;
 using BuoyancyApi.Application.Common.AppRequests.Pagination;
 using BuoyancyApi.WebApi.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using BuoyancyApi.Application.PlannedTime.Commands.Upsert;
 
 namespace BuoyancyApi.WebApi.Controllers;
 
@@ -21,6 +22,19 @@ public class PlannedTimeController : ControllerBase
         CancellationToken cancellationToken)
     {
         var appResponse = await handler.Handle(command, cancellationToken);
+
+        return appResponse.ToActionResult();
+    }
+
+    [HttpPut("api/projects/{projectId}/plannedtimes/{weekStartingMonday}")]
+    public async Task<ActionResult<AppResponse<int>>> UpsertPlannedTime(
+        [FromRoute] int projectId,
+        [FromRoute] DateOnly weekStartingMonday,
+        [FromBody] UpsertPlannedTimeCommand command,
+        [FromServices] UpsertPlannedTimeCommandHandler handler,
+        CancellationToken cancellationToken)
+    {
+        var appResponse = await handler.Handle(command with { ProjectId = projectId, WeekStartingMonday = weekStartingMonday }, cancellationToken);
 
         return appResponse.ToActionResult();
     }
@@ -59,7 +73,7 @@ public class PlannedTimeController : ControllerBase
         return appResponse.ToActionResult();
     }
 
-    
+
 
     [HttpDelete("api/plannedtimes/{plannedTimeId}")]
     public async Task<ActionResult<AppResponse>> DeletePlannedTime(
