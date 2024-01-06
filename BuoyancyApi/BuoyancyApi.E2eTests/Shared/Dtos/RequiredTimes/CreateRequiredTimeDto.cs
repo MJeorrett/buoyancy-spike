@@ -7,5 +7,5 @@ public record CreateRequiredTimeDto
     public int RoleId { get; init; }
     public int SkillId { get; init; }
     public int WeekStartingMonday { get; init; }
-    public int Hours { get; init; }
+    public decimal Hours { get; init; }
 }

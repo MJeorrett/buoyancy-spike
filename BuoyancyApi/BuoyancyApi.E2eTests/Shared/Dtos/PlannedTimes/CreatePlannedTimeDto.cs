@@ -7,5 +7,5 @@ public record CreatePlannedTimeDto
     public int PersonId { get; init; }
     public int? NonProjectTimeTypeId { get; init; }
     public int WeekStartingMonday { get; init; }
-    public int Hours { get; init; }
+    public decimal Hours { get; init; }
 }

@@ -12,5 +12,5 @@ public class RequiredTimeEntity
 
     public DateOnly WeekStartingMonday { get; set; }
 
-    public int Hours { get; set; }
+    public decimal Hours { get; set; }
 }

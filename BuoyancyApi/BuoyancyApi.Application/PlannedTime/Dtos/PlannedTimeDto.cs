@@ -9,7 +9,7 @@ public record PlannedTimeDto
     public int? ProjectId { get; set; }
     public int? NonProjectTimeTypeId { get; set; }
     public DateOnly WeekStartingMonday { get; set; } = default!;
-    public int Hours { get; set; } = default!;
+    public decimal Hours { get; set; } = default!;
 
     public static PlannedTimeDto MapFromEntity(PlannedTimeEntity entity)
     {

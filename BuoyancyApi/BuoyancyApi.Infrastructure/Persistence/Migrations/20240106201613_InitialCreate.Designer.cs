@@ -9,10 +9,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace BuoyancyApi.Infrastructure.Migrations
+namespace BuoyancyApi.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240105202601_InitialCreate")]
+    [Migration("20240106201613_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -99,8 +99,8 @@ namespace BuoyancyApi.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Hours")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Hours")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int?>("NonProjectTimeTypeId")
                         .HasColumnType("int");
@@ -146,8 +146,8 @@ namespace BuoyancyApi.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Hours")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Hours")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("ProjectId")
                         .HasColumnType("int");

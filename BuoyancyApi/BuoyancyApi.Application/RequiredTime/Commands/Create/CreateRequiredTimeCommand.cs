@@ -10,7 +10,7 @@ public class CreateRequiredTimeCommand
     public int RoleId { get; init; }
     public int SkillId { get; init; }
     public DateOnly WeekStartingMonday { get; init; }
-    public int Hours { get; init; }
+    public decimal Hours { get; init; }
 }
 
 public class CreateRequiredTimeCommandHandler : IRequestHandler<CreateRequiredTimeCommand, int>

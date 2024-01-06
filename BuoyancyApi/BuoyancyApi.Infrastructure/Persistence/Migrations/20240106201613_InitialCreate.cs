@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace BuoyancyApi.Infrastructure.Migrations
+namespace BuoyancyApi.Infrastructure.Persistence.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration
@@ -34,7 +34,7 @@ namespace BuoyancyApi.Infrastructure.Migrations
                     ProjectId = table.Column<int>(type: "int", nullable: false),
                     NonProjectTimeTypeId = table.Column<int>(type: "int", nullable: true),
                     WeekStartingMonday = table.Column<DateTime>(type: "date", nullable: false),
-                    Hours = table.Column<int>(type: "int", nullable: false)
+                    Hours = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -64,7 +64,7 @@ namespace BuoyancyApi.Infrastructure.Migrations
                     RoleId = table.Column<int>(type: "int", nullable: false),
                     SkillId = table.Column<int>(type: "int", nullable: false),
                     WeekStartingMonday = table.Column<DateTime>(type: "date", nullable: false),
-                    Hours = table.Column<int>(type: "int", nullable: false)
+                    Hours = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {

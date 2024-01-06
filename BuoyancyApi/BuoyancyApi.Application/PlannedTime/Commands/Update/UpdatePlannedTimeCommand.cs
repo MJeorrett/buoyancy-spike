@@ -13,7 +13,7 @@ public record UpdatePlannedTimeCommand
     public int PersonId { get; init; }
     public int? NonProjectTimeTypeId { get; init; }
     public DateOnly WeekStartingMonday { get; init; }
-    public int Hours { get; init; }
+    public decimal Hours { get; init; }
 }
 
 public class UpdatePlannedTimeCommandHandler : IRequestHandler<UpdatePlannedTimeCommand>
