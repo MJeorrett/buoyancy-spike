@@ -20,6 +20,7 @@ public record ProjectPlannedTimeDto
                 .Select(_ => new ProjectPlannedWeekDto
                 {
                     WeekStartingMonday = _.Key,
+                    TotalHours = _.Sum(_ => _.Hours),
                     Entries = _.GroupBy(_ => _.Person.Role.Name).Select(_ => new ProjectPlannedTimeEntryDto
                     {
                         RoleName = _.Key,
@@ -33,6 +34,8 @@ public record ProjectPlannedTimeDto
 public record ProjectPlannedWeekDto
 {
     public DateOnly WeekStartingMonday { get; init; }
+
+    public decimal TotalHours { get; init; }
 
     public List<ProjectPlannedTimeEntryDto> Entries { get; init; } = new();
 }

@@ -6,6 +6,7 @@ export type ProjectPlannedTimeDto = {
 
 export type ProjectPlannedWeekDto = {
     weekStartingMonday: string;
+    totalHours: number;
     entries: ProjectPlannedTimeEntryDto[];
 }
 
