@@ -20,13 +20,10 @@ public record ProjectPlannedTimeDto
                 .Select(_ => new ProjectPlannedWeekDto
                 {
                     WeekStartingMonday = _.Key,
-                    Entries = _.Select(_ => new ProjectPlannedTimeEntryDto
+                    Entries = _.GroupBy(_ => _.Person.Role.Name).Select(_ => new ProjectPlannedTimeEntryDto
                     {
-                        Id = _.Id,
-                        PersonId = _.PersonId,
-                        PersonName = _.Person.Name,
-                        RoleName = _.Person.Role.Name,
-                        Hours = _.Hours,
+                        RoleName = _.Key,
+                        Hours = _.Sum(_ => _.Hours),
                     }).ToList(),
                 }).ToList()
         };
@@ -43,10 +40,6 @@ public record ProjectPlannedWeekDto
 public record ProjectPlannedTimeEntryDto
 {
     public int Id { get; init; }
-
-    public int PersonId { get; init; }
-
-    public required string PersonName { get; init; }
 
     public required string RoleName { get; init; }
 

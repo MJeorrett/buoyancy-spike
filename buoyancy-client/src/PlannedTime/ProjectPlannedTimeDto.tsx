@@ -11,8 +11,6 @@ export type ProjectPlannedWeekDto = {
 
 export type ProjectPlannedTimeEntryDto = {
     id: number;
-    personId: number;
-    personName: string;
     roleName: string;
     hours: number;
 }
