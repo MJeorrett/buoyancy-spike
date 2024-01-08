@@ -8,7 +8,7 @@ public record ProjectRequiredTimeDto
 
     public required string ProjectTitle { get; init; }
 
-    public List<ProjectRequiredWeekDto> Weeks { get; init; } = new();
+    public List<ProjectRequiredWeekDto> Weeks { get; set; } = new();
 
     public static ProjectRequiredTimeDto MapFromEntity(ProjectEntity entity)
     {
@@ -26,7 +26,7 @@ public record ProjectRequiredTimeDto
                         RoleName = _.Key,
                         Hours = _.Sum(_ => _.Hours),
                     }).ToList(),
-                }).OrderBy(_ => _.WeekStartingMonday).ToList()
+                }).ToList()
         };
     }
 }

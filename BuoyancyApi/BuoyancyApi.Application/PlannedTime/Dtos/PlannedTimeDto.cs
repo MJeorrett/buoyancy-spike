@@ -8,7 +8,7 @@ public record ProjectPlannedTimeDto
 
     public required string ProjectTitle { get; init; }
 
-    public List<ProjectWeekDto> Weeks { get; init; } = new();
+    public List<ProjectWeekDto> Weeks { get; set; } = new();
 
     public static ProjectPlannedTimeDto MapFromEntity(ProjectEntity entity)
     {

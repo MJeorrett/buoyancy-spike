@@ -33,6 +33,26 @@ public class ListRequiredTimesQueryHandler : IRequestHandler<ListRequiredTimesQu
             entity => ProjectRequiredTimeDto.MapFromEntity(entity),
             cancellationToken);
 
+        var allDates = result.Items.SelectMany(_ => _.Weeks).Select(_ => _.WeekStartingMonday).Distinct().ToList();
+
+        foreach (var r in result.Items)
+        {
+            foreach (var date in allDates)
+            {
+                if (!r.Weeks.Any(_ => _.WeekStartingMonday == date))
+                {
+                    r.Weeks.Add(new()
+                    {
+                        WeekStartingMonday = date,
+                        TotalHours = 0,
+                        Entries = new(),
+                    });
+                }
+            }
+
+            r.Weeks = r.Weeks.OrderBy(_ => _.WeekStartingMonday).ToList();
+        }
+
         return new(200, result);
     }
 
