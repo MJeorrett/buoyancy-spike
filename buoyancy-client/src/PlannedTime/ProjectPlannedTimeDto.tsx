@@ -6,12 +6,14 @@ export type ProjectPlannedTimeDto = {
 
 export type ProjectPlannedWeekDto = {
     weekStartingMonday: string;
-    totalHours: number;
-    entries: ProjectPlannedTimeEntryDto[];
+    totalRequiredHours: number;
+    totalPlannedHours: number;
+    time: ProjectPlannedTimeEntryDto[];
 }
 
 export type ProjectPlannedTimeEntryDto = {
     id: number;
     roleName: string;
-    hours: number;
+    requiredHours: number;
+    plannedHours: number;
 }

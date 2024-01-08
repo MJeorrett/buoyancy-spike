@@ -2,7 +2,6 @@ using BuoyancyApi.Application.RequiredTimes.Commands.Create;
 using BuoyancyApi.Application.RequiredTimes.Commands.Delete;
 using BuoyancyApi.Application.RequiredTimes.Commands.Update;
 using BuoyancyApi.Application.RequiredTimes.Dtos;
-using BuoyancyApi.Application.RequiredTimes.Queries.GetById;
 using BuoyancyApi.Application.RequiredTimes.Queries.List;
 using BuoyancyApi.Application.Common.AppRequests;
 using BuoyancyApi.Application.Common.AppRequests.Pagination;
@@ -26,23 +25,12 @@ public class RequiredTimeController : ControllerBase
     }
 
     [HttpGet("api/requiredtimes")]
-    public async Task<ActionResult<AppResponse<PaginatedListResponse<RequiredTimeDto>>>> ListRequiredTimes(
+    public async Task<ActionResult<AppResponse<PaginatedListResponse<ProjectRequiredTimeDto>>>> ListRequiredTimes(
         [FromQuery] ListRequiredTimesQuery query,
         [FromServices] ListRequiredTimesQueryHandler handler,
         CancellationToken cancellationToken)
     {
         var appResponse = await handler.Handle(query, cancellationToken);
-
-        return appResponse.ToActionResult();
-    }
-
-    [HttpGet("api/requiredtimes/{requiredTimeId}")]
-    public async Task<ActionResult<AppResponse<RequiredTimeDto>>> GetRequiredTimeById(
-        [FromRoute] int requiredTimeId,
-        [FromServices] GetRequiredTimeByIdQueryHandler handler,
-        CancellationToken cancellationToken)
-    {
-        var appResponse = await handler.Handle(new() { RequiredTimeId = requiredTimeId }, cancellationToken);
 
         return appResponse.ToActionResult();
     }

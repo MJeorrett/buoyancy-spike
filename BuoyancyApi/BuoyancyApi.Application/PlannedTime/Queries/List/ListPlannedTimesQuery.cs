@@ -39,10 +39,11 @@ public class ListPlannedTimesQueryHandler : IRequestHandler<ListPlannedTimesQuer
     private IQueryable<ProjectEntity> BuildQueryable(ListPlannedTimesQuery query)
     {
         var queryable = _dbContext.Projects
-            .Include(_ => _.PlannedTime)
-                .ThenInclude(_ => _.Person)
-            .Include(_ => _.PlannedTime)
-                .ThenInclude(_ => _.Person.Role);
+            .Include(_ => _.PlannedTime.OrderBy(_ => _.WeekStartingMonday))
+                .ThenInclude(_ => _.Person.Role)
+            .Include(_ => _.RequiredTime.OrderBy(_ => _.WeekStartingMonday))
+                .ThenInclude(_ => _.Role)
+            .Where(_ => _.Title != "ClearSky Meetings");
 
         return queryable;
     }

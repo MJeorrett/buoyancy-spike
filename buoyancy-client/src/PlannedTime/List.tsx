@@ -46,25 +46,53 @@ const PlannedTimeTable = () => {
               </TableCell>
               {row.weeks.map((week) => (
                 <TableCell key={week.weekStartingMonday}>
-                  {week.totalHours === 0 ? (
+                  {week.totalRequiredHours === 0 &&
+                  week.totalPlannedHours === 0 ? (
                     <Box sx={{ mb: 1 }}>-</Box>
                   ) : (
-                    week.entries.map(
+                    week.time.map(
                       (entry) =>
-                        entry.hours > 0 && (
+                        (entry.requiredHours > 0 || entry.plannedHours > 0) && (
                           <Chip
                             key={entry.id}
-                            sx={{ mb: 1 }}
+                            sx={{
+                              mb: 1,
+                              borderColor:
+                                entry.requiredHours > entry.plannedHours
+                                  ? "red"
+                                  : entry.requiredHours < entry.plannedHours
+                                  ? "orange"
+                                  : "black",
+                            }}
                             variant="outlined"
                             label={`${getRoleAbbreviation(entry.roleName)}: ${
-                              entry.hours
-                            }`}
+                              entry.plannedHours
+                            }/${entry.requiredHours}`}
                           />
                         )
                     )
                   )}
-                  {week.totalHours > 0 && (
-                    <Chip label={`TOTAL: ${week.totalHours}`} />
+                  {(week.totalRequiredHours > 0 ||
+                    week.totalPlannedHours > 0) && (
+                    <Chip
+                      sx={{
+                        bgcolor:
+                          week.totalRequiredHours > week.totalPlannedHours
+                            ? "red"
+                            : week.totalRequiredHours < week.totalPlannedHours
+                            ? "orange"
+                            : "black",
+                        color:
+                          week.totalRequiredHours != week.totalPlannedHours
+                            ? "white"
+                            : "black",
+                        fontWeight:
+                          week.totalRequiredHours != week.totalPlannedHours
+                            ? "bold"
+                            : "normal",
+                      }}
+                      label={`TOTAL: ${week.totalPlannedHours}/${week.totalRequiredHours}`}
+                    />
                   )}
                 </TableCell>
               ))}

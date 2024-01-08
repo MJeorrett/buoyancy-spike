@@ -8,7 +8,7 @@ public record ProjectPlannedTimeDto
 
     public required string ProjectTitle { get; init; }
 
-    public List<ProjectPlannedWeekDto> Weeks { get; init; } = new();
+    public List<ProjectWeekDto> Weeks { get; init; } = new();
 
     public static ProjectPlannedTimeDto MapFromEntity(ProjectEntity entity)
     {
@@ -16,35 +16,55 @@ public record ProjectPlannedTimeDto
         {
             Id = entity.Id,
             ProjectTitle = entity.Title,
-            Weeks = entity.PlannedTime.GroupBy(_ => _.WeekStartingMonday)
-                .Select(_ => new ProjectPlannedWeekDto
+            Weeks = entity.RequiredTime
+                .Select(_ => new
+                {
+                    Planned = false,
+                    WeekStartingMonday = _.WeekStartingMonday,
+                    Hours = _.Hours,
+                    RoleName = _.Role.Name,
+                })
+                .Concat(entity.PlannedTime.Select(_ => new
+                {
+                    Planned = true,
+                    WeekStartingMonday = _.WeekStartingMonday,
+                    Hours = _.Hours,
+                    RoleName = _.Person.Role.Name,
+                }))
+                .GroupBy(_ => _.WeekStartingMonday)
+                .Select(_ => new ProjectWeekDto
                 {
                     WeekStartingMonday = _.Key,
-                    TotalHours = _.Sum(_ => _.Hours),
-                    Entries = _.GroupBy(_ => _.Person.Role.Name).Select(_ => new ProjectPlannedTimeEntryDto
+                    TotalRequiredHours = _.Where(_ => !_.Planned).Sum(_ => _.Hours),
+                    TotalPlannedHours = _.Where(_ => _.Planned).Sum(_ => _.Hours),
+                    Time = _.GroupBy(_ => _.RoleName).Select(_ => new ProjectTimeEntryDto
                     {
                         RoleName = _.Key,
-                        Hours = _.Sum(_ => _.Hours),
+                        RequiredHours = _.Where(_ => !_.Planned).Sum(_ => _.Hours),
+                        PlannedHours = _.Where(_ => _.Planned).Sum(_ => _.Hours),
                     }).ToList(),
-                }).ToList()
+                }).OrderBy(_ => _.WeekStartingMonday).ToList()
         };
     }
 }
 
-public record ProjectPlannedWeekDto
+public record ProjectWeekDto
 {
     public DateOnly WeekStartingMonday { get; init; }
 
-    public decimal TotalHours { get; init; }
+    public decimal TotalRequiredHours { get; init; }
+    public decimal TotalPlannedHours { get; init; }
 
-    public List<ProjectPlannedTimeEntryDto> Entries { get; init; } = new();
+    public List<ProjectTimeEntryDto> Time { get; init; } = new();
 }
 
-public record ProjectPlannedTimeEntryDto
+public record ProjectTimeEntryDto
 {
     public int Id { get; init; }
 
     public required string RoleName { get; init; }
 
-    public decimal Hours { get; init; }
+    public decimal RequiredHours { get; init; }
+
+    public decimal PlannedHours { get; init; }
 }

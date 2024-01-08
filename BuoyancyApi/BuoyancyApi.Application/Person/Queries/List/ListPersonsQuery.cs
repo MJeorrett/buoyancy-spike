@@ -3,6 +3,7 @@ using BuoyancyApi.Application.Common.AppRequests;
 using BuoyancyApi.Application.Common.AppRequests.Pagination;
 using BuoyancyApi.Application.Common.Interfaces;
 using BuoyancyApi.Core.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace BuoyancyApi.Application.Persons.Queries.List;
 
@@ -37,7 +38,9 @@ public class ListPersonsQueryHandler : IRequestHandler<ListPersonsQuery, Paginat
 
     private IQueryable<PersonEntity> BuildQueryable(ListPersonsQuery query)
     {
-        var queryable = _dbContext.Persons;
+        var queryable = _dbContext.Persons
+            .Include(_ => _.Role)
+            .Include(_ => _.PlannedTime);
 
         return queryable;
     }

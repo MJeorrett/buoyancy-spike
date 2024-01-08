@@ -7,4 +7,6 @@ public class ProjectEntity
     public string Title { get; set; } = null!;
 
     public List<PlannedTimeEntity> PlannedTime { get; set; } = null!;
+
+    public List<RequiredTimeEntity> RequiredTime { get; set; } = null!;
 }

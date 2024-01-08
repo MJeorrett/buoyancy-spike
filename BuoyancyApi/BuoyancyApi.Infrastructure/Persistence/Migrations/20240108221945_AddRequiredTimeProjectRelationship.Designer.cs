@@ -4,6 +4,7 @@ using BuoyancyApi.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BuoyancyApi.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240108221945_AddRequiredTimeProjectRelationship")]
+    partial class AddRequiredTimeProjectRelationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -169,8 +172,6 @@ namespace BuoyancyApi.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.HasIndex("RoleId");
-
                     b.ToTable("RequiredTime", (string)null);
                 });
 
@@ -267,15 +268,7 @@ namespace BuoyancyApi.Infrastructure.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BuoyancyApi.Core.Entities.RoleEntity", "Role")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Project");
-
-                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("BuoyancyApi.Core.Entities.PersonEntity", b =>
