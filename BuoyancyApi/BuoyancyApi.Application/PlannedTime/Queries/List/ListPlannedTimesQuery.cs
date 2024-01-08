@@ -64,7 +64,8 @@ public class ListPlannedTimesQueryHandler : IRequestHandler<ListPlannedTimesQuer
                 .ThenInclude(_ => _.Person.Role)
             .Include(_ => _.RequiredTime.OrderBy(_ => _.WeekStartingMonday))
                 .ThenInclude(_ => _.Role)
-            .Where(_ => _.Title != "ClearSky Meetings");
+            .Where(_ => _.Title != "ClearSky Meetings")
+            .OrderBy(_ => _.Title);
 
         return queryable;
     }
