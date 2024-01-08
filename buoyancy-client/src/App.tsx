@@ -8,6 +8,7 @@ import ProjectsList from "./Projects/List";
 import ProjectShow from "./Projects/Show";
 import ProjectEdit from "./Projects/Edit";
 import ProjectCreate from "./Projects/Create";
+import PlannedTimeList from "./PlannedTime/List";
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
         edit={ProjectEdit}
         create={ProjectCreate}
       />
+      <Resource name="plannedtimes" list={PlannedTimeList} />
     </Admin>
   );
 };

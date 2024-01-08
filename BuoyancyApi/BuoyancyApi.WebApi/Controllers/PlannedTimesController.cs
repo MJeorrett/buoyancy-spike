@@ -2,7 +2,6 @@ using BuoyancyApi.Application.PlannedTimes.Commands.Create;
 using BuoyancyApi.Application.PlannedTimes.Commands.Delete;
 using BuoyancyApi.Application.PlannedTimes.Commands.Update;
 using BuoyancyApi.Application.PlannedTimes.Dtos;
-using BuoyancyApi.Application.PlannedTimes.Queries.GetById;
 using BuoyancyApi.Application.PlannedTimes.Queries.List;
 using BuoyancyApi.Application.Common.AppRequests;
 using BuoyancyApi.Application.Common.AppRequests.Pagination;
@@ -40,23 +39,12 @@ public class PlannedTimeController : ControllerBase
     }
 
     [HttpGet("api/plannedtimes")]
-    public async Task<ActionResult<AppResponse<PaginatedListResponse<PlannedTimeDto>>>> ListPlannedTimes(
+    public async Task<ActionResult<AppResponse<PaginatedListResponse<ProjectPlannedTimeDto>>>> ListPlannedTimes(
         [FromQuery] ListPlannedTimesQuery query,
         [FromServices] ListPlannedTimesQueryHandler handler,
         CancellationToken cancellationToken)
     {
         var appResponse = await handler.Handle(query, cancellationToken);
-
-        return appResponse.ToActionResult();
-    }
-
-    [HttpGet("api/plannedtimes/{plannedTimeId}")]
-    public async Task<ActionResult<AppResponse<PlannedTimeDto>>> GetPlannedTimeById(
-        [FromRoute] int plannedTimeId,
-        [FromServices] GetPlannedTimeByIdQueryHandler handler,
-        CancellationToken cancellationToken)
-    {
-        var appResponse = await handler.Handle(new() { PlannedTimeId = plannedTimeId }, cancellationToken);
 
         return appResponse.ToActionResult();
     }

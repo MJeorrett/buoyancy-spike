@@ -1,4 +1,10 @@
-import { List, Datagrid, TextField, ReferenceField, ShowButton } from "react-admin";
+import {
+  List,
+  Datagrid,
+  TextField,
+  ReferenceField,
+  ShowButton,
+} from "react-admin";
 
 const PeopleList = () => (
   <List>
@@ -7,8 +13,8 @@ const PeopleList = () => (
       <TextField source="name" />
       <ReferenceField source="roleId" reference="roles" />
       <div style={{ textAlign: "right" }}>
-          <ShowButton label="" />
-        </div>
+        <ShowButton label="" />
+      </div>
     </Datagrid>
   </List>
 );

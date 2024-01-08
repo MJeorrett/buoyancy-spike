@@ -3,6 +3,7 @@ using BuoyancyApi.Application.Common.AppRequests;
 using BuoyancyApi.Application.Common.AppRequests.Pagination;
 using BuoyancyApi.Application.Common.Interfaces;
 using BuoyancyApi.Core.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace BuoyancyApi.Application.PlannedTimes.Queries.List;
 
@@ -11,7 +12,7 @@ public record ListPlannedTimesQuery : PaginatedListQuery
 
 }
 
-public class ListPlannedTimesQueryHandler : IRequestHandler<ListPlannedTimesQuery, PaginatedListResponse<PlannedTimeDto>>
+public class ListPlannedTimesQueryHandler : IRequestHandler<ListPlannedTimesQuery, PaginatedListResponse<ProjectPlannedTimeDto>>
 {
     private readonly IApplicationDbContext _dbContext;
 
@@ -20,24 +21,28 @@ public class ListPlannedTimesQueryHandler : IRequestHandler<ListPlannedTimesQuer
         _dbContext = dbContext;
     }
 
-    public async Task<AppResponse<PaginatedListResponse<PlannedTimeDto>>> Handle(
+    public async Task<AppResponse<PaginatedListResponse<ProjectPlannedTimeDto>>> Handle(
         ListPlannedTimesQuery query,
         CancellationToken cancellationToken)
     {
         var plannedTimeQueryable = BuildQueryable(query);
 
-        var result = await PaginatedListResponse<PlannedTimeDto>.Create(
+        var result = await PaginatedListResponse<ProjectPlannedTimeDto>.Create(
             plannedTimeQueryable,
             query,
-            entity => PlannedTimeDto.MapFromEntity(entity),
+            entity => ProjectPlannedTimeDto.MapFromEntity(entity),
             cancellationToken);
 
         return new(200, result);
     }
 
-    private IQueryable<PlannedTimeEntity> BuildQueryable(ListPlannedTimesQuery query)
+    private IQueryable<ProjectEntity> BuildQueryable(ListPlannedTimesQuery query)
     {
-        var queryable = _dbContext.PlannedTimes;
+        var queryable = _dbContext.Projects
+            .Include(_ => _.PlannedTime)
+                .ThenInclude(_ => _.Person)
+            .Include(_ => _.PlannedTime)
+                .ThenInclude(_ => _.Person.Role);
 
         return queryable;
     }

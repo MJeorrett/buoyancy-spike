@@ -18,34 +18,6 @@ public class PlannedTimeE2eTests : TestBase
     }
 
     [Fact]
-    public async Task ShouldReturnCreatedPlannedTimeById()
-    {
-        var createResponse = await HttpClient.CreatePlannedTime().Call(new() {
-        ProjectId = 1,
-        PersonId = 1,
-        NonProjectTimeTypeId = 1,
-        WeekStartingMonday = 1,
-        Hours = 1,
-        });
-
-        await createResponse.Should().HaveStatusCode(201);
-
-        var createdPlannedTimeId = await createResponse.ReadResponseContentAs<int>();
-
-        var getPlannedTimeByIdResponse = await HttpClient.GetPlannedTimeById().Call(createdPlannedTimeId);
-
-        await getPlannedTimeByIdResponse.Should().HaveStatusCode(200);
-
-        var returnedPlannedTime = await getPlannedTimeByIdResponse.ReadResponseContentAs<PlannedTimeDto>();
-
-        returnedPlannedTime.ProjectId.Should().Be(1);
-        returnedPlannedTime.PersonId.Should().Be(1);
-        returnedPlannedTime.NonProjectTimeTypeId.Should().Be(1);
-        returnedPlannedTime.WeekStartingMonday.Should().Be(1);
-        returnedPlannedTime.Hours.Should().Be(1);
-    }
-
-    [Fact]
     public async Task ShouldListCreatedPlannedTimes()
     {
         var plannedTime1Id = await HttpClient.CreatePlannedTime().CallAndParseResponse(new() {
