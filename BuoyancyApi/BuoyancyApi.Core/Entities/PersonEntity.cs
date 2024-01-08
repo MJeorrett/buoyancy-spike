@@ -6,7 +6,11 @@ public class PersonEntity
 
     public required string Name { get; set; }
 
+    public decimal WeeklyCapacity { get; set; }
+
     public int RoleId { get; set; }
 
     public RoleEntity Role { get; set; } = null!;
+
+    public List<PlannedTimeEntity> PlannedTime { get; init; } = null!;
 }

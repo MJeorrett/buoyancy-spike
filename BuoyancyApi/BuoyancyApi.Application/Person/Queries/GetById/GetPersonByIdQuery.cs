@@ -23,6 +23,8 @@ public class GetPersonByIdQueryHandler : IRequestHandler<GetPersonByIdQuery, Per
         CancellationToken cancellationToken)
     {
         var entity = await _dbContext.Persons
+            .Include(_ => _.Role)
+            .Include(_ => _.PlannedTime)
             .FirstOrDefaultAsync(_ => _.Id == query.PersonId, cancellationToken);
 
         if (entity == null)
