@@ -3,6 +3,8 @@ Sidecar app for [Float](float.com) which answers the questions:
 - Are all projects fully resourced?
 - What are some good options to better use the resources I have?
 - What additional resources do I need to fully resource all projects?
+- New dev starts, where should they be assigned?
+- New client signs, when can they start?
 
 # Resource Types & Skills
 - Tech lead
