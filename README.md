@@ -1,4 +1,6 @@
 # Buoyancy
+WARNING!!: This is a very rough prototype at the moment so expect bugs and missing features and it generally not to work!
+
 Sidecar app for [Float](float.com) which answers the questions:
 - Are all projects fully resourced?
 - What are some good options to better use the resources I have?
